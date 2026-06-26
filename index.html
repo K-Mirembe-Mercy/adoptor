@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdaptIQ — Personalized AI Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- LANDING PAGE -->
+<div id="landing-page">
+  <nav class="landing-nav">
+    <div class="nav-logo">
+      <div class="logo-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="12" stroke="#7C3AED" stroke-width="2"/>
+          <circle cx="14" cy="14" r="5" fill="#06B6D4"/>
+          <line x1="14" y1="2" x2="14" y2="8" stroke="#7C3AED" stroke-width="2"/>
+          <line x1="14" y1="20" x2="14" y2="26" stroke="#7C3AED" stroke-width="2"/>
+          <line x1="2" y1="14" x2="8" y2="14" stroke="#06B6D4" stroke-width="2"/>
+          <line x1="20" y1="14" x2="26" y2="14" stroke="#06B6D4" stroke-width="2"/>
+        </svg>
+      </div>
+      <span>AdaptIQ</span>
+    </div>
+    <div class="nav-links">
+      <span class="nav-badge">Hackathon 2025</span>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <canvas id="neural-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-eyebrow">AI-Powered · Adaptive · Personalized</div>
+      <h1 class="hero-title">Learning that<br/><span class="gradient-text">thinks like you</span></h1>
+      <p class="hero-sub">AdaptIQ builds a unique learning path for every mind. Powered by Gemini and Featherless AI, it adapts in real-time to how you understand, not how others do.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="showOnboarding()">Start Learning Free</button>
+        <button class="btn-ghost" onclick="showDemo()">See how it works</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">2</span><span class="stat-label">AI Models</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Topics</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Adaptive</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-strip">
+    <div class="feature-card">
+      <div class="feature-icon cyan">🧠</div>
+      <h3>Adaptive Curriculum</h3>
+      <p>Gemini AI analyzes your responses and reshapes lesson difficulty dynamically.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon violet">⚡</div>
+      <h3>Multi-Model Intelligence</h3>
+      <p>Featherless AI routes your queries to the best specialist model for your topic.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon cyan">📊</div>
+      <h3>Real-Time Progress</h3>
+      <p>Visual mastery maps show exactly where you are and where you're headed.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon violet">🎯</div>
+      <h3>Smart Quizzes</h3>
+      <p>Auto-generated assessments target your exact knowledge gaps.</p>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <p>Built with ❤️ by <strong>Kafeero Mirembe Mercy</strong> & <strong>Kukiriza Samuel</strong> · AdaptIQ Hackathon 2025</p>
+  </footer>
+</div>
+
+<!-- ONBOARDING MODAL -->
+<div id="onboarding-modal" class="modal hidden">
+  <div class="modal-backdrop" onclick="closeOnboarding()"></div>
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeOnboarding()">✕</button>
+    <div class="modal-step" id="step-1">
+      <h2>Welcome to AdaptIQ 👋</h2>
+      <p>Let's set up your personalized learning experience in 3 quick steps.</p>
+      <div class="form-group">
+        <label>Your name</label>
+        <input type="text" id="user-name" placeholder="e.g. Mercy" class="form-input"/>
+      </div>
+      <div class="form-group">
+        <label>What do you want to learn?</label>
+        <div class="topic-chips" id="topic-chips">
+          <span class="chip" data-topic="Mathematics">Mathematics</span>
+          <span class="chip" data-topic="Physics">Physics</span>
+          <span class="chip" data-topic="Computer Science">Computer Science</span>
+          <span class="chip" data-topic="Chemistry">Chemistry</span>
+          <span class="chip" data-topic="Biology">Biology</span>
+          <span class="chip" data-topic="History">History</span>
+          <span class="chip" data-topic="Literature">Literature</span>
+          <span class="chip" data-topic="Economics">Economics</span>
+          <span class="chip" data-topic="Philosophy">Philosophy</span>
+          <span class="chip" data-topic="Machine Learning">Machine Learning</span>
+          <span class="chip" data-topic="Data Science">Data Science</span>
+          <span class="chip" data-topic="Web Development">Web Development</span>
+        </div>
+        <input type="text" id="custom-topic" placeholder="Or type a custom topic..." class="form-input mt-8"/>
+      </div>
+      <button class="btn-primary full-width" onclick="goToStep2()">Continue →</button>
+    </div>
+
+    <div class="modal-step hidden" id="step-2">
+      <h2>Your current level</h2>
+      <p>AdaptIQ will start here and adapt as you progress.</p>
+      <div class="level-cards">
+        <div class="level-card" data-level="beginner" onclick="selectLevel(this)">
+          <div class="level-icon">🌱</div>
+          <h3>Beginner</h3>
+          <p>Starting fresh or brushing up basics</p>
+        </div>
+        <div class="level-card" data-level="intermediate" onclick="selectLevel(this)">
+          <div class="level-icon">🔥</div>
+          <h3>Intermediate</h3>
+          <p>Know the fundamentals, going deeper</p>
+        </div>
+        <div class="level-card" data-level="advanced" onclick="selectLevel(this)">
+          <div class="level-icon">⚡</div>
+          <h3>Advanced</h3>
+          <p>Expert-level, tackling complex ideas</p>
+        </div>
+      </div>
+      <button class="btn-primary full-width" onclick="goToStep3()">Continue →</button>
+    </div>
+
+    <div class="modal-step hidden" id="step-3">
+      <h2>API Keys Setup</h2>
+      <p>Connect your AI engines. Keys are stored locally and never sent anywhere except the respective APIs.</p>
+      <div class="form-group">
+        <label>
+          Gemini API Key
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" class="get-key-link">Get free key →</a>
+        </label>
+        <div class="key-input-wrap">
+          <input type="password" id="gemini-key" placeholder="AIza..." class="form-input"/>
+          <button class="toggle-eye" onclick="toggleKey('gemini-key')">👁</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>
+          Featherless AI API Key
+          <a href="https://featherless.ai" target="_blank" class="get-key-link">Get key →</a>
+        </label>
+        <div class="key-input-wrap">
+          <input type="password" id="featherless-key" placeholder="fl-..." class="form-input"/>
+          <button class="toggle-eye" onclick="toggleKey('featherless-key')">👁</button>
+        </div>
+      </div>
+      <div class="info-box">
+        💡 You can start with just the Gemini key. Featherless AI adds access to 100+ specialist models.
+      </div>
+      <button class="btn-primary full-width" onclick="launchApp()">Launch My Learning Path 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="main-app" class="hidden">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon small">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="12" stroke="#7C3AED" stroke-width="2"/>
+          <circle cx="14" cy="14" r="5" fill="#06B6D4"/>
+          <line x1="14" y1="2" x2="14" y2="8" stroke="#7C3AED" stroke-width="2"/>
+          <line x1="14" y1="20" x2="14" y2="26" stroke="#7C3AED" stroke-width="2"/>
+          <line x1="2" y1="14" x2="8" y2="14" stroke="#06B6D4" stroke-width="2"/>
+          <line x1="20" y1="14" x2="26" y2="14" stroke="#06B6D4" stroke-width="2"/>
+        </svg>
+      </div>
+      <span class="logo-text">AdaptIQ</span>
+    </div>
+
+    <div class="user-profile-mini">
+      <div class="avatar" id="sidebar-avatar">M</div>
+      <div>
+        <div class="user-name-mini" id="sidebar-name">Learner</div>
+        <div class="user-level-mini" id="sidebar-level">Beginner</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" onclick="showTab('dashboard', this)">
+        <span class="nav-icon">🏠</span> Dashboard
+      </button>
+      <button class="nav-item" onclick="showTab('learn', this)">
+        <span class="nav-icon">📖</span> Learn
+      </button>
+      <button class="nav-item" onclick="showTab('quiz', this)">
+        <span class="nav-icon">🎯</span> Quizzes
+      </button>
+      <button class="nav-item" onclick="showTab('tutor', this)">
+        <span class="nav-icon">🤖</span> AI Tutor
+      </button>
+      <button class="nav-item" onclick="showTab('progress', this)">
+        <span class="nav-icon">📊</span> Progress
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="model-status">
+        <div class="model-dot" id="gemini-dot"></div>
+        <span id="gemini-status-text">Gemini</span>
+      </div>
+      <div class="model-status">
+        <div class="model-dot" id="featherless-dot"></div>
+        <span id="featherless-status-text">Featherless</span>
+      </div>
+      <button class="btn-ghost-sm" onclick="showSettings()">⚙ Settings</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <!-- DASHBOARD TAB -->
+    <div id="tab-dashboard" class="tab-content active">
+      <div class="tab-header">
+        <h1>Good <span id="greeting-time">morning</span>, <span id="greeting-name">Learner</span> 👋</h1>
+        <p class="tab-subtitle">Your adaptive learning path is ready.</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card streak-card">
+          <div class="streak-icon">🔥</div>
+          <div>
+            <div class="big-number" id="streak-count">1</div>
+            <div class="card-label">Day Streak</div>
+          </div>
+        </div>
+        <div class="card xp-card">
+          <div class="streak-icon">⭐</div>
+          <div>
+            <div class="big-number" id="xp-count">0</div>
+            <div class="card-label">XP Earned</div>
+          </div>
+        </div>
+        <div class="card mastery-card">
+          <div class="streak-icon">🎯</div>
+          <div>
+            <div class="big-number" id="mastery-count">0%</div>
+            <div class="card-label">Topic Mastery</div>
+          </div>
+        </div>
+        <div class="card sessions-card">
+          <div class="streak-icon">📖</div>
+          <div>
+            <div class="big-number" id="sessions-count">0</div>
+            <div class="card-label">Sessions Done</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h2 class="card-title">Your Learning Path</h2>
+          <div id="learning-path-vis" class="path-container">
+            <div class="path-loading">Generating your path...</div>
+          </div>
+          <button class="btn-primary mt-16" onclick="generateLearningPath()">Generate / Refresh Path</button>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Today's Recommendations</h2>
+          <div id="recommendations" class="recommendations-list">
+            <div class="rec-item" onclick="quickLearn('Core Concepts')">
+              <div class="rec-icon">📚</div>
+              <div>
+                <div class="rec-title">Core Concepts</div>
+                <div class="rec-sub">Start with fundamentals</div>
+              </div>
+              <div class="rec-arrow">→</div>
+            </div>
+            <div class="rec-item" onclick="quickLearn('Practice Problems')">
+              <div class="rec-icon">🧩</div>
+              <div>
+                <div class="rec-title">Practice Problems</div>
+                <div class="rec-sub">Test your knowledge</div>
+              </div>
+              <div class="rec-arrow">→</div>
+            </div>
+            <div class="rec-item" onclick="showTab('quiz', null)">
+              <div class="rec-icon">🎯</div>
+              <div>
+                <div class="rec-title">Quick Quiz</div>
+                <div class="rec-sub">5 adaptive questions</div>
+              </div>
+              <div class="rec-arrow">→</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEARN TAB -->
+    <div id="tab-learn" class="tab-content hidden">
+      <div class="tab-header">
+        <h1>Learn <span class="topic-highlight" id="learn-topic-title">Your Topic</span></h1>
+        <p class="tab-subtitle">AI-generated lessons adapted to your level.</p>
+      </div>
+
+      <div class="learn-controls">
+        <div class="form-group inline">
+          <label>Topic</label>
+          <input type="text" id="learn-topic-input" class="form-input compact" placeholder="e.g. Calculus, Neural Networks..."/>
+        </div>
+        <div class="form-group inline">
+          <label>Subtopic / Focus</label>
+          <input type="text" id="learn-subtopic-input" class="form-input compact" placeholder="e.g. Derivatives, Backpropagation..."/>
+        </div>
+        <div class="form-group inline">
+          <label>Model</label>
+          <select id="learn-model" class="form-input compact">
+            <option value="gemini">Gemini (Default)</option>
+            <option value="featherless">Featherless AI</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="generateLesson()" id="generate-btn">Generate Lesson ⚡</button>
+      </div>
+
+      <div id="lesson-container" class="lesson-container">
+        <div class="lesson-placeholder">
+          <div class="placeholder-icon">📖</div>
+          <p>Choose a topic above and generate your first adaptive lesson.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ TAB -->
+    <div id="tab-quiz" class="tab-content hidden">
+      <div class="tab-header">
+        <h1>Adaptive Quizzes 🎯</h1>
+        <p class="tab-subtitle">Questions generated for your exact knowledge level.</p>
+      </div>
+
+      <div id="quiz-setup" class="quiz-setup">
+        <div class="quiz-options">
+          <div class="form-group">
+            <label>Quiz Topic</label>
+            <input type="text" id="quiz-topic-input" class="form-input" placeholder="e.g. Photosynthesis, Algebra..."/>
+          </div>
+          <div class="form-group">
+            <label>Number of Questions</label>
+            <select id="quiz-count" class="form-input">
+              <option value="3">3 questions (Quick)</option>
+              <option value="5" selected>5 questions (Standard)</option>
+              <option value="10">10 questions (Deep Dive)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Difficulty</label>
+            <select id="quiz-difficulty" class="form-input">
+              <option value="auto">Auto-adapt to my level</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          <button class="btn-primary" onclick="generateQuiz()" id="quiz-gen-btn">Generate Quiz ⚡</button>
+        </div>
+      </div>
+
+      <div id="quiz-area" class="hidden">
+        <div id="quiz-progress-bar-wrap">
+          <div class="quiz-progress-info">
+            <span id="quiz-q-label">Question 1 of 5</span>
+            <span id="quiz-score-live">Score: 0</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="quiz-progress-fill"></div>
+          </div>
+        </div>
+        <div id="quiz-question-card" class="quiz-card">
+          <div id="quiz-question-text" class="quiz-q"></div>
+          <div id="quiz-options-list" class="quiz-options-list"></div>
+          <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+          <button id="quiz-next-btn" class="btn-primary hidden" onclick="nextQuestion()">Next Question →</button>
+        </div>
+      </div>
+
+      <div id="quiz-results" class="hidden">
+        <div class="results-card">
+          <div class="results-emoji" id="results-emoji">🎉</div>
+          <h2 id="results-title">Quiz Complete!</h2>
+          <div class="results-score" id="results-score">4/5</div>
+          <p id="results-message">Great work!</p>
+          <div id="results-breakdown" class="results-breakdown"></div>
+          <div class="results-actions">
+            <button class="btn-primary" onclick="retakeQuiz()">Take Another Quiz</button>
+            <button class="btn-ghost" onclick="showTab('learn', null)">Study More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI TUTOR TAB -->
+    <div id="tab-tutor" class="tab-content hidden">
+      <div class="tab-header">
+        <h1>AI Tutor 🤖</h1>
+        <p class="tab-subtitle">Ask anything. Your tutor adapts to how you think.</p>
+      </div>
+
+      <div class="tutor-layout">
+        <div class="tutor-sidebar-panel">
+          <h3>Model</h3>
+          <div class="model-selector">
+            <button class="model-btn active" onclick="selectTutorModel('gemini', this)" id="tutor-gemini-btn">
+              <div class="model-btn-icon">✨</div>
+              <div>
+                <div class="model-btn-name">Gemini</div>
+                <div class="model-btn-desc">Google's flagship</div>
+              </div>
+            </button>
+            <button class="model-btn" onclick="selectTutorModel('featherless', this)" id="tutor-featherless-btn">
+              <div class="model-btn-icon">🪶</div>
+              <div>
+                <div class="model-btn-name">Featherless</div>
+                <div class="model-btn-desc">100+ specialist models</div>
+              </div>
+            </button>
+          </div>
+
+          <div id="featherless-model-picker" class="hidden">
+            <h3>Featherless Model</h3>
+            <select id="featherless-model-select" class="form-input">
+              <option value="meta-llama/Meta-Llama-3.1-8B-Instruct">Llama 3.1 8B</option>
+              <option value="meta-llama/Meta-Llama-3.1-70B-Instruct">Llama 3.1 70B</option>
+              <option value="mistralai/Mistral-7B-Instruct-v0.3">Mistral 7B</option>
+              <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral 8x7B</option>
+              <option value="Qwen/Qwen2.5-72B-Instruct">Qwen2.5 72B</option>
+              <option value="deepseek-ai/DeepSeek-R1-Distill-Llama-70B">DeepSeek R1 70B</option>
+            </select>
+          </div>
+
+          <h3>Context</h3>
+          <div class="form-group">
+            <label>Learning Topic</label>
+            <input type="text" id="tutor-context" class="form-input" placeholder="e.g. Calculus"/>
+          </div>
+
+          <h3>Quick Prompts</h3>
+          <div class="quick-prompts">
+            <button class="prompt-chip" onclick="useQuickPrompt('Explain this concept simply')">Explain simply</button>
+            <button class="prompt-chip" onclick="useQuickPrompt('Give me a real-world example')">Real-world example</button>
+            <button class="prompt-chip" onclick="useQuickPrompt('What are common mistakes?')">Common mistakes</button>
+            <button class="prompt-chip" onclick="useQuickPrompt('Give me practice problems')">Practice problems</button>
+            <button class="prompt-chip" onclick="useQuickPrompt('Summarize what I should know')">Summarize key points</button>
+          </div>
+        </div>
+
+        <div class="chat-area">
+          <div class="chat-messages" id="chat-messages">
+            <div class="chat-msg assistant">
+              <div class="msg-avatar ai-av">AI</div>
+              <div class="msg-bubble">
+                Hi! I'm your adaptive AI tutor. I'll tailor my explanations to your level. What would you like to understand today?
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <textarea id="chat-input" class="chat-textarea" placeholder="Ask your tutor anything..." rows="2"
+              onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendTutorMessage();}"></textarea>
+            <button class="send-btn" onclick="sendTutorMessage()" id="send-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS TAB -->
+    <div id="tab-progress" class="tab-content hidden">
+      <div class="tab-header">
+        <h1>Your Progress 📊</h1>
+        <p class="tab-subtitle">Track mastery across every topic you've studied.</p>
+      </div>
+
+      <div class="progress-grid">
+        <div class="card">
+          <h2 class="card-title">Overall Mastery</h2>
+          <div class="mastery-ring-wrap">
+            <canvas id="mastery-ring" width="160" height="160"></canvas>
+            <div class="mastery-ring-label" id="mastery-ring-label">0%</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">XP Over Time</h2>
+          <canvas id="xp-chart" width="300" height="160"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Topic Mastery Breakdown</h2>
+        <div id="topic-mastery-list" class="topic-mastery-list">
+          <div class="empty-state">Complete lessons and quizzes to see your mastery breakdown.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Recent Activity</h2>
+        <div id="activity-log" class="activity-log">
+          <div class="empty-state">No activity yet — start learning!</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="settings-modal" class="modal hidden">
+  <div class="modal-backdrop" onclick="closeSettings()"></div>
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSettings()">✕</button>
+    <h2>Settings ⚙</h2>
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="settings-name" class="form-input"/>
+    </div>
+    <div class="form-group">
+      <label>Primary Learning Topic</label>
+      <input type="text" id="settings-topic" class="form-input"/>
+    </div>
+    <div class="form-group">
+      <label>Gemini API Key</label>
+      <div class="key-input-wrap">
+        <input type="password" id="settings-gemini-key" class="form-input"/>
+        <button class="toggle-eye" onclick="toggleKey('settings-gemini-key')">👁</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Featherless AI API Key</label>
+      <div class="key-input-wrap">
+        <input type="password" id="settings-featherless-key" class="form-input"/>
+        <button class="toggle-eye" onclick="toggleKey('settings-featherless-key')">👁</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Learning Level</label>
+      <select id="settings-level" class="form-input">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="saveSettings()">Save Changes</button>
+      <button class="btn-danger" onclick="resetApp()">Reset Everything</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
