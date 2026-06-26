@@ -1,6 +1,6 @@
 # AdaptIQ — Adaptive Learning Platform 🧠⚡
 
-> **Hackathon 2025** · Built by **Kafeero Mirembe Mercy** & **Kukiriza Samuel**
+> **Build with AI Hackathon 2026** · Built by **Kafeero Mirembe Mercy** & **Kukiriza Samuel**
 
 AdaptIQ is an AI-powered adaptive learning platform that creates a personalized learning experience for every individual. Unlike static curricula, AdaptIQ adjusts lesson depth, quiz difficulty, and tutoring style in real-time based on how you learn.
 
