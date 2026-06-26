@@ -8,7 +8,8 @@ AdaptIQ is an AI-powered adaptive learning platform that creates a personalized 
 
 ## 🌐 Live Demo
 
-**[https://yourusername.github.io/adaptiq](https://yourusername.github.io/adaptiq)**
+**[ https://k-mirembe-mercy.github.io/adoptor/]
+(https://k-mirembe-mercy.github.io/adoptor/)**
 
 ---
 
@@ -37,7 +38,7 @@ AdaptIQ is an AI-powered adaptive learning platform that creates a personalized 
 ```bash
 git init
 git add .
-git commit -m "AdaptIQ — Hackathon 2025"
+git commit -m "AdaptIQ — Build woth AI Hackathon 2026"
 gh repo create adaptiq --public
 git push -u origin main
 # Enable Pages in GitHub settings
@@ -106,4 +107,4 @@ MIT License — Free to use, modify, and build upon.
 
 ---
 
-*Built for the 2025 Hackathon · AdaptIQ makes learning feel like it was made just for you.*
+*Built for the 2026 Build with AI Hackathon · AdaptIQ makes learning feel like it was made just for you.*
